@@ -1,16 +1,17 @@
-import React, { useEffect } from 'react'
+
+import React, { useEffect ,useState} from 'react'
 import EmpTable from './EmpTable'
+import { GetAllEmployees } from '../api';
 
 
-
-function EmpMngApp() {
+function EmployeeMngApp() {
   const [employeeData, setEmployeeData]=useState({
     "employees":[],
     "pagination": {
-      "totalEmployess": 5,
+      "totalEmployess": 0,
       "currentPage": 1,
       "totalPages": 1,
-      "pageSize": 10
+      "pageSize": 5
     }
   });
   const fetchEmployees = async (search='',page=1,limit=5)=>{
@@ -54,4 +55,4 @@ useEffect(()=>{
 }
 
 
-export default EmpMngApp
+export default EmployeeMngApp

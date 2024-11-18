@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { CreateEmployee } from '../api';
+import React, { useEffect, useState } from 'react';
+import { CreateEmployee, UpdateEmpById } from '../api'; // Import updated function
 import { notify } from '../utils';
 
-function AddEmp({ showModal, setShowModal }) {
+function AddEmp({ showModal, setShowModal, updateEmpObj }) {
   const [employee, setEmployee] = useState({
     name: '',
     email: '',
@@ -11,33 +11,49 @@ function AddEmp({ showModal, setShowModal }) {
     salary: '',
   });
 
+  const [updateMode, setUpdateMode] = useState(false);
+
+  useEffect(() => {
+    if (updateEmpObj) {
+      setUpdateMode(true);
+      setEmployee(updateEmpObj);
+    } else {
+      setUpdateMode(false);
+      resetEmpStates();
+    }
+  }, [updateEmpObj]);
+
   const handleClose = () => {
     setShowModal(false);
+    setUpdateMode(false);
+  };
+
+  const resetEmpStates = () => {
+    setEmployee({ name: '', email: '', phone: '', position: '', salary: '' });
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEmployee({ ...employee, [name]: value });
   };
-   const resetEmpStates= ()=>{
-    setEmployee({name: '', email: '', phone: '', position: '', salary: ''})
-   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(employee); 
     try {
-      const {success, message}= await CreateEmployee(employee);
-      console.log(success, message);
-      if (success){
-        notify(message,'success')
-      }else{
-        notify(message,'error')
+      const { success, message } = updateMode
+        ? await UpdateEmpById(employee) // Call update API
+        : await CreateEmployee(employee); // Call create API
+
+      if (success) {
+        notify(message, 'success');
+      } else {
+        notify(message, 'error');
       }
     } catch (err) {
-      notify('failed to create empoyee, try again later','error')
+      notify('Failed to process request, try again later', 'error');
     }
     setShowModal(false);
-    resetEmpStates(); // Close the modal after submission
+    resetEmpStates();
   };
 
   return (
@@ -50,14 +66,9 @@ function AddEmp({ showModal, setShowModal }) {
       <div className="modal-dialog" role="document">
         <div className="modal-content">
           <div className="modal-header">
-            <h5>Add New Employee Details</h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={handleClose}
-            ></button>
+            <h5>{updateMode ? 'Update Employee' : 'Add New Employee Details'}</h5>
+            <button type="button" className="btn-close" onClick={handleClose}></button>
           </div>
-
           <div className="modal-body">
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
@@ -71,7 +82,6 @@ function AddEmp({ showModal, setShowModal }) {
                   required
                 />
               </div>
-
               <div className="mb-3">
                 <label className="form-label">Email</label>
                 <input
@@ -83,7 +93,6 @@ function AddEmp({ showModal, setShowModal }) {
                   required
                 />
               </div>
-
               <div className="mb-3">
                 <label className="form-label">Phone No</label>
                 <input
@@ -95,7 +104,6 @@ function AddEmp({ showModal, setShowModal }) {
                   required
                 />
               </div>
-
               <div className="mb-3">
                 <label className="form-label">Position</label>
                 <input
@@ -107,7 +115,6 @@ function AddEmp({ showModal, setShowModal }) {
                   required
                 />
               </div>
-
               <div className="mb-3">
                 <label className="form-label">Salary</label>
                 <input
@@ -119,9 +126,8 @@ function AddEmp({ showModal, setShowModal }) {
                   required
                 />
               </div>
-
               <button className="btn btn-primary" type="submit">
-                Add
+                {updateMode ? 'Update' : 'Add'}
               </button>
             </form>
           </div>

@@ -9,9 +9,7 @@ function EmpTable({ employees = [], pagination, fetchEmployees,handleUpdateEmp ,
   const TableRow = ({ employee }) => (
     <tr className="align-middle">
       <td>
-        <Link to={`/employee/${employee._id}`} className="text-decoration-none text-primary">
           {employee.name}
-        </Link>
       </td>
       <td>{employee.email}</td>
       <td>{employee.phone}</td>

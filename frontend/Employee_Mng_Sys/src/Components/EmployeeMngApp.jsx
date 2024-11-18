@@ -72,13 +72,6 @@ function EmployeeMngApp() {
             >
               <i className="bi bi-person-plus"></i> Add New Employee
             </button>
-
-            {/* Search input (optional) */}
-            {/* <input
-              type="text"
-              placeholder="Search"
-              className="form-control w-50"
-            /> */}
           </div>
 
           <div className="table-container" style={{ overflowX: 'auto' }}>

@@ -11,10 +11,11 @@ const EmployeeRouter = require('./Routes/EmployeeRoutes');
 
 // Enable CORS
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from React app
-  methods: 'GET,POST,PUT,DELETE', // Specify allowed HTTP methods
-  allowedHeaders: 'Content-Type,Authorization', // Specify allowed headers
+  origin: ['http://localhost:5173', 'http://localhost:5174'], // Add all relevant origins
+  methods: 'GET,POST,PUT,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
 }));
+
 
 app.use(bodyParser.json());
 

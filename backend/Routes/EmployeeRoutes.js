@@ -7,7 +7,7 @@ routes.get('/', getAllEmployees) //gets all the employee
 routes.post('/',createEmployee)
 
 routes.put('/:id',updateEmployeeById) // creates new emp
- // creates new emp
+
 routes.get('/:id',getEmployeeById)  // gets emp by id
 
 routes.delete('/:id',deleteEmpById) // deletes the emp by id

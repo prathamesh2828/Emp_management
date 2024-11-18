@@ -15,8 +15,7 @@ function App() {
         <Routes>
           <Route path ="/" element = {<Navigate to ="employee"/>} />
           <Route path ="/employee" element = {<EmployeeMngApp/> } />
-          <Route path ="/employee/:id" element = {<EmpDetails/> } />
-
+          {/* <Route path ="/employee/:id" element = {<EmpDetails/> } /> */}
 
         </Routes>
         </BrowserRouter>

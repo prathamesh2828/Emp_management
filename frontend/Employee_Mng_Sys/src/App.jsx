@@ -1,7 +1,7 @@
 import {BrowserRouter, Navigate, Route,Routes} from 'react-router-dom';
 import './App.css'
 import EmployeeMngApp from './Components/EmployeeMngApp';
-import EmpDetails from './Components/EmpDetails';
+
 
 
 
